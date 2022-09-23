@@ -1,30 +1,26 @@
-# Windows 10 Toast Notifications
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)  [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjithurjacob%2FWindows-10-Toast-Notifications.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjithurjacob%2FWindows-10-Toast-Notifications?ref=badge_shield) [![HitCount](http://hits.dwyl.io/jithurjacob/Windows-10-Toast-Notifications.svg)](http://hits.dwyl.io/jithurjacob/Windows-10-Toast-Notifications) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+# Windows Rich Notifications for Python (winrichnotify)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-An easy-to-use Python library for displaying Windows 10 Toast Notifications which is useful for Windows GUI development.
+An easy-to-use Python library for displaying Toast Notifications for Windows 10 and Windows 11.
 
-
-![o7ja4 1](https://cloud.githubusercontent.com/assets/7101452/19763806/75f71ba4-9c5d-11e6-9f16-d0d4bf43e63e.png)
+![o7ja4 1](https://user-images.githubusercontent.com/4750998/192027245-5c2298c7-a036-4638-8f51-49cdb8c5b6ca.png)
 
 
 ## Installation
 
 ```
-pip install win10toast
+pip install winrichnotify
 ```
 
-## Requirements
-
-### Installation of pywin32
-```
-pypiwin32
-setuptools
-```
+# Build Setup
+1. Install [Poetry](https://python-poetry.org/)
+2. Navigate to the root directory of the project and run ```poetry install```. This will install the dependencies for the project
+3. Run ```poetry build``` to generate built releases of the library.
 
 ## Example
 
-```
-from win10toast import ToastNotifier
+```python
+from winrichnotify import ToastNotifier
 toaster = ToastNotifier()
 toaster.show_toast("Hello World!!!",
                    "Python is 10 seconds awsm!",
@@ -40,15 +36,9 @@ toaster.show_toast("Example two",
 while toaster.notification_active(): time.sleep(0.1)
 ```
 
-## Contributors [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jithurjacob/Windows-10-Toast-Notifications/issues)
+## Contributing
 
-+ [sidc9](https://github.com/sidc9)
-+ [sakurai-youhei](https://github.com/sakurai-youhei)
-+ [BroderickCarlin](https://github.com/BroderickCarlin)
-+ [florianluediger](https://github.com/florianluediger)
-+ [eric-wieser](https://github.com/eric-wieser)
-+ [Guts](https://github.com/Guts)
-
+Contributions are very welcome! To find a list of current contributors go [here](https://github.com/HarryPeach/WindowsRichNotifications/graphs/contributors)
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjithurjacob%2FWindows-10-Toast-Notifications.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjithurjacob%2FWindows-10-Toast-Notifications?ref=badge_large)
+This project is protected under the MIT license, available in the LICENSE file.

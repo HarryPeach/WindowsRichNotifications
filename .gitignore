@@ -99,3 +99,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Poetry venv
+.venv/
+.pytest_cache

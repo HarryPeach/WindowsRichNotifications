@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "winrichnotify"
+version = "0.1.0"
+description = "An easy-to-use Python library for displaying rich notifications on Windows 10/11"
+authors = ["Harry Peach", "Jithu R Jacob"]
+license = "MIT"
+readme = "README.md"
+keywords = ["notifications", "windows"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Topic :: Utilities",
+    "Operating System :: Microsoft",
+    "Environment :: Win32 (MS Windows)",
+    "License :: OSI Approved :: MIT License"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pypiwin32 = "^223"
+
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^1.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

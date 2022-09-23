@@ -21,6 +21,7 @@ pypiwin32 = "^223"
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^1.7.0"
+pylama = "^8.4.1"
 
 [build-system]
 requires = ["poetry-core"]

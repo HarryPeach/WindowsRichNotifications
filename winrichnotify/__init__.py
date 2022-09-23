@@ -1,73 +1,37 @@
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
 __all__ = ['ToastNotifier']
 
-# #############################################################################
-# ########## Libraries #############
-# ##################################
-# standard library
 import logging
 import threading
 from os import path
 from time import sleep
-from pkg_resources import Requirement
-from pkg_resources import resource_filename
+from pkg_resources import Requirement, resource_filename
 
-# 3rd party modules
-from win32api import GetModuleHandle
-from win32api import PostQuitMessage
-from win32con import CW_USEDEFAULT
-from win32con import IDI_APPLICATION
-from win32con import IMAGE_ICON
-from win32con import LR_DEFAULTSIZE
-from win32con import LR_LOADFROMFILE
-from win32con import WM_DESTROY
-from win32con import WM_USER
-from win32con import WS_OVERLAPPED
-from win32con import WS_SYSMENU
-from win32gui import CreateWindow
-from win32gui import DestroyWindow
-from win32gui import LoadIcon
-from win32gui import LoadImage
-from win32gui import NIF_ICON
-from win32gui import NIF_INFO
-from win32gui import NIF_MESSAGE
-from win32gui import NIF_TIP
-from win32gui import NIM_ADD
-from win32gui import NIM_DELETE
-from win32gui import NIM_MODIFY
-from win32gui import RegisterClass
-from win32gui import UnregisterClass
-from win32gui import Shell_NotifyIcon
-from win32gui import UpdateWindow
-from win32gui import WNDCLASS
-
-# ############################################################################
-# ########### Classes ##############
-# ##################################
+from win32api import GetModuleHandle, PostQuitMessage
+from win32con import (CW_USEDEFAULT, IDI_APPLICATION, IMAGE_ICON, LR_DEFAULTSIZE,
+                      LR_LOADFROMFILE, WM_DESTROY, WM_USER, WS_OVERLAPPED, WS_SYSMENU)
+from win32gui import (CreateWindow, DestroyWindow, LoadIcon, LoadImage, NIF_ICON, NIF_INFO,
+                      NIF_MESSAGE, NIF_TIP, NIM_ADD, NIM_DELETE, NIM_MODIFY, RegisterClass,
+                      UnregisterClass, Shell_NotifyIcon, UpdateWindow, WNDCLASS)
 
 
 class ToastNotifier(object):
-    """Create a Windows 10  toast notification.
-
-    from: https://github.com/jithurjacob/Windows-10-Toast-Notifications
+    """Easily create a Toast notification for Windows 10/11
     """
 
     def __init__(self):
-        """Initialize."""
         self._thread = None
 
     def _show_toast(self, title, msg,
-                    icon_path, duration):
-        """Notification settings.
+                    icon_path, duration) -> None:
+        """Show the toast notification
 
-        :title: notification title
-        :msg: notification message
-        :icon_path: path to the .ico file to custom notification
-        :duration: delay in seconds before notification self-destruction
+        Args:
+            title (str): The title of the notification
+            msg (str): The message of the notification
+            icon_path (str): The path to the icon to be used in the notification
+            duration (int): The duration for the notification to last
         """
+
         message_map = {WM_DESTROY: self.on_destroy, }
 
         # Register the window class.
@@ -75,10 +39,7 @@ class ToastNotifier(object):
         self.hinst = self.wc.hInstance = GetModuleHandle(None)
         self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
         self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
-        try:
-            self.classAtom = RegisterClass(self.wc)
-        except:
-            pass  # not sure of this
+        self.classAtom = RegisterClass(self.wc)
         style = WS_OVERLAPPED | WS_SYSMENU
         self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
                                  0, 0, CW_USEDEFAULT,
@@ -138,7 +99,7 @@ class ToastNotifier(object):
 
     def notification_active(self):
         """See if we have an active notification showing"""
-        if self._thread != None and self._thread.is_alive():
+        if self._thread is not None and self._thread.is_alive():
             # We have an active notification, let is finish we don't spam them
             return True
         return False

@@ -101,4 +101,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # Poetry venv
-.venv
+.venv/
+.pytest_cache

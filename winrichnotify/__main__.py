@@ -1,4 +1,4 @@
-﻿from windowsrichnotifications import ToastNotifier
+﻿from winrichnotify import ToastNotifier
 
 import time
 
@@ -18,6 +18,7 @@ if __name__ == "__main__":
         icon_path=None,
         duration=5,
         threaded=True
-        )
+    )
     # Wait for threaded notification to finish
-    while toaster.notification_active(): time.sleep(0.1)
+    while toaster.notification_active():
+        time.sleep(0.1)

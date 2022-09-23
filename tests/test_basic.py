@@ -1,4 +1,9 @@
-from windowsrichnotifications import ToastNotifier
+from winrichnotify import ToastNotifier
+
+
+def test_random():
+    print("Wahoo!")
+
 
 if __name__ == "__main__":
     # Example
@@ -10,4 +15,3 @@ if __name__ == "__main__":
     toaster.show_toast(
         "Example two",
         "Once you start coding in Python you'll hate other languages")
-        

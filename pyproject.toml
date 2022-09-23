@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "windowsrichnotifications"
+name = "winrichnotify"
 version = "0.1.0"
 description = "An easy-to-use Python library for displaying rich notifications on Windows 10/11"
 authors = ["Harry Peach", "Jithu R Jacob"]
@@ -16,6 +16,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pypiwin32 = "^223"
 
 
 [tool.poetry.group.dev.dependencies]

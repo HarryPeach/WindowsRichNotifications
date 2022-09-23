@@ -78,7 +78,7 @@ class ToastNotifier(object):
         try:
             self.classAtom = RegisterClass(self.wc)
         except:
-            pass #not sure of this
+            pass  # not sure of this
         style = WS_OVERLAPPED | WS_SYSMENU
         self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
                                  0, 0, CW_USEDEFAULT,
@@ -90,7 +90,8 @@ class ToastNotifier(object):
         if icon_path is not None:
             icon_path = path.realpath(icon_path)
         else:
-            icon_path =  resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
+            icon_path = resource_filename(Requirement.parse(
+                "winrichnotify"), "winrichnotify/data/python.ico")
         icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
         try:
             hicon = LoadImage(self.hinst, icon_path,
@@ -115,7 +116,7 @@ class ToastNotifier(object):
         return None
 
     def show_toast(self, title="Notification", msg="Here comes the message",
-                    icon_path=None, duration=5, threaded=False):
+                   icon_path=None, duration=5, threaded=False):
         """Notification settings.
 
         :title: notification title
@@ -130,7 +131,8 @@ class ToastNotifier(object):
                 # We have an active notification, let is finish so we don't spam them
                 return False
 
-            self._thread = threading.Thread(target=self._show_toast, args=(title, msg, icon_path, duration))
+            self._thread = threading.Thread(
+                target=self._show_toast, args=(title, msg, icon_path, duration))
             self._thread.start()
         return True
 
@@ -154,4 +156,3 @@ class ToastNotifier(object):
         PostQuitMessage(0)
 
         return None
-

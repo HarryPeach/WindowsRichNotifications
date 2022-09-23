@@ -1,4 +1,5 @@
-﻿from win10toast import ToastNotifier
+﻿from windowsrichnotifications import ToastNotifier
+
 import time
 
 # #############################################################################

@@ -31,8 +31,7 @@ class ToastNotifier(object):
             icon_path (str): The path to the icon to be used in the notification
             duration (int): The duration for the notification to last
         """
-
-        message_map = {WM_DESTROY: self.on_destroy, }
+        message_map = {WM_DESTROY: self._on_destroy, }
 
         # Register the window class.
         self.wc = WNDCLASS()
@@ -76,14 +75,22 @@ class ToastNotifier(object):
         UnregisterClass(self.wc.lpszClassName, None)
         return None
 
-    def show_toast(self, title="Notification", msg="Here comes the message",
-                   icon_path=None, duration=5, threaded=False):
-        """Notification settings.
+    def show_toast(self, title="", msg="",
+                   icon_path=None, duration=5, threaded=False) -> bool:
+        """Shows a toast notification to the user
 
-        :title: notification title
-        :msg: notification message
-        :icon_path: path to the .ico file to custom notification
-        :duration: delay in seconds before notification self-destruction
+        Args:
+            title (str, optional): What to title the notification with. Defaults to "".
+            msg (str, optional): The body content of the notification. Defaults to "".
+            icon_path (_type_, optional): Path to the icon (.ico) used in the notification.
+                                          Defaults to None.
+            duration (int, optional): The duration the notification should last for in seconds.
+                                      Defaults to 5.
+            threaded (bool, optional): Whether the thread should run on its own thread, useful for
+                                       non-blocking notifications. Defaults to False.
+
+        Returns:
+            bool: Returns False if a notification is already active
         """
         if not threaded:
             self._show_toast(title, msg, icon_path, duration)
@@ -97,21 +104,19 @@ class ToastNotifier(object):
             self._thread.start()
         return True
 
-    def notification_active(self):
-        """See if we have an active notification showing"""
+    def notification_active(self) -> bool:
+        """Returns true if there is a notification currently being shown
+
+        Returns:
+            bool: Whether a notification is currently being shown
+        """
         if self._thread is not None and self._thread.is_alive():
             # We have an active notification, let is finish we don't spam them
             return True
         return False
 
-    def on_destroy(self, hwnd, msg, wparam, lparam):
-        """Clean after notification ended.
-
-        :hwnd:
-        :msg:
-        :wparam:
-        :lparam:
-        """
+    def _on_destroy(self, hwnd, msg, wparam, lparam) -> None:
+        """Clean-up after notification ended."""
         nid = (self.hwnd, 0)
         Shell_NotifyIcon(NIM_DELETE, nid)
         PostQuitMessage(0)

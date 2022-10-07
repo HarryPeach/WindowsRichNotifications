@@ -75,13 +75,13 @@ class ToastNotifier(object):
         UnregisterClass(self.wc.lpszClassName, None)
         return None
 
-    def show_toast(self, title="", msg="",
+    def show_toast(self, body, title="",
                    icon_path=None, duration=5, threaded=False) -> bool:
         """Shows a toast notification to the user
 
         Args:
+            body (str): The body content of the notification. Cannot be blank.
             title (str, optional): What to title the notification with. Defaults to "".
-            msg (str, optional): The body content of the notification. Defaults to "".
             icon_path (_type_, optional): Path to the icon (.ico) used in the notification.
                                           Defaults to None.
             duration (int, optional): The duration the notification should last for in seconds.
@@ -92,15 +92,18 @@ class ToastNotifier(object):
         Returns:
             bool: Returns False if a notification is already active
         """
+        if body == "":
+            raise ValueError("The body of a notification cannot be empty")
+
         if not threaded:
-            self._show_toast(title, msg, icon_path, duration)
+            self._show_toast(title, body, icon_path, duration)
         else:
             if self.notification_active():
                 # We have an active notification, let is finish so we don't spam them
                 return False
 
             self._thread = threading.Thread(
-                target=self._show_toast, args=(title, msg, icon_path, duration))
+                target=self._show_toast, args=(title, body, icon_path, duration))
             self._thread.start()
         return True
 

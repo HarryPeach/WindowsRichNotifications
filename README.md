@@ -1,7 +1,7 @@
 # Windows Rich Notifications for Python (winrichnotify)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-An easy-to-use Python library for displaying Toast Notifications for Windows 10 and Windows 11.
+An easy-to-use Python library for displaying notifications for Windows 10 and Windows 11.
 
 ![o7ja4 1](https://user-images.githubusercontent.com/4750998/192027245-5c2298c7-a036-4638-8f51-49cdb8c5b6ca.png)
 
@@ -20,20 +20,21 @@ pip install winrichnotify
 ## Example
 
 ```python
-from winrichnotify import ToastNotifier
-toaster = ToastNotifier()
-toaster.show_toast("Hello World!!!",
-                   "Python is 10 seconds awsm!",
-                   icon_path="custom.ico",
-                   duration=10)
+from winrichnotify import WindowsNotifier
+notifier = WindowsNotifier()
+notifier.notify("This is an example notification!",
+                "With an example title!",
+                icon_path="custom.ico",
+                duration=10)
 
-toaster.show_toast("Example two",
-                   "This notification is in it's own thread!",
-                   icon_path=None,
-                   duration=5,
-                   threaded=True)
-# Wait for threaded notification to finish
-while toaster.notification_active(): time.sleep(0.1)
+notifier.notify("Another notification!",
+                "With yet another title!",
+                icon_path=None,
+                duration=5,
+                threaded=True)
+
+# Wait for the threaded notification to finish
+while notifier.notification_active(): time.sleep(0.1)
 ```
 
 ## Contributing

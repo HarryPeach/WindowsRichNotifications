@@ -1,4 +1,4 @@
-__all__ = ['ToastNotifier']
+__all__ = ['WindowsNotifier']
 
 import logging
 import threading
@@ -14,16 +14,16 @@ from win32gui import (CreateWindow, DestroyWindow, LoadIcon, LoadImage, NIF_ICON
                       UnregisterClass, Shell_NotifyIcon, UpdateWindow, WNDCLASS)
 
 
-class ToastNotifier(object):
-    """Easily create a Toast notification for Windows 10/11
+class WindowsNotifier(object):
+    """Easily create a notification for Windows 10/11
     """
 
     def __init__(self):
         self._thread = None
 
-    def _show_toast(self, title, msg,
-                    icon_path, duration) -> None:
-        """Show the toast notification
+    def _notify(self, title, msg,
+                icon_path, duration) -> None:
+        """Show the notification
 
         Args:
             title (str): The title of the notification
@@ -75,9 +75,9 @@ class ToastNotifier(object):
         UnregisterClass(self.wc.lpszClassName, None)
         return None
 
-    def show_toast(self, body, title="",
-                   icon_path=None, duration=5, threaded=False) -> bool:
-        """Shows a toast notification to the user
+    def notify(self, body, title="",
+               icon_path=None, duration=5, threaded=False) -> bool:
+        """Shows a notification to the user
 
         Args:
             body (str): The body content of the notification. Cannot be blank.
@@ -98,14 +98,14 @@ class ToastNotifier(object):
             raise ValueError("The body of a notification cannot be empty")
 
         if not threaded:
-            self._show_toast(title, body, icon_path, duration)
+            self._notify(title, body, icon_path, duration)
         else:
             if self.notification_active():
                 # We have an active notification, let is finish so we don't spam them
                 return False
 
             self._thread = threading.Thread(
-                target=self._show_toast, args=(title, body, icon_path, duration))
+                target=self._notify, args=(title, body, icon_path, duration))
             self._thread.start()
         return True
 

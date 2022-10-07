@@ -85,7 +85,9 @@ class ToastNotifier(object):
             icon_path (_type_, optional): Path to the icon (.ico) used in the notification.
                                           Defaults to None.
             duration (int, optional): The duration the notification should last for in seconds.
-                                      Defaults to 5.
+                                      Defaults to 5. Windows 10/11 also by default only allow
+                                      notifications to be on screen for a maximum of 5 seconds
+                                      unless changed by the user.
             threaded (bool, optional): Whether the thread should run on its own thread, useful for
                                        non-blocking notifications. Defaults to False.
 

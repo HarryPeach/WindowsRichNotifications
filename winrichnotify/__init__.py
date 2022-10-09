@@ -100,7 +100,7 @@ class WindowsNotifier(object):
         if not threaded:
             self._notify(title, body, icon_path, duration)
         else:
-            if self.notification_active():
+            if self.is_notification_active():
                 # We have an active notification, let is finish so we don't spam them
                 return False
 
@@ -109,7 +109,7 @@ class WindowsNotifier(object):
             self._thread.start()
         return True
 
-    def notification_active(self) -> bool:
+    def is_notification_active(self) -> bool:
         """Returns true if there is a notification currently being shown
 
         Returns:

@@ -34,7 +34,7 @@ notifier.notify("Another notification!",
                 threaded=True)
 
 # Wait for the threaded notification to finish
-while notifier.notification_active(): time.sleep(0.1)
+while notifier.is_notification_active(): time.sleep(0.1)
 ```
 
 ## Contributing

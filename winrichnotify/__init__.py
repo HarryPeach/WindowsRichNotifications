@@ -2,6 +2,7 @@ __all__ = ['WindowsNotifier']
 
 import logging
 import threading
+import time
 from os import path
 from time import sleep
 from pkg_resources import Requirement, resource_filename
@@ -100,18 +101,21 @@ class WindowsNotifier(object):
         # Taskbar icon
         flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
         nid = (self.hwnd, 0, flags, LOCAL_WM, hicon, "Tooltip")
+
         Shell_NotifyIcon(NIM_ADD, nid)
+        notif_start_time = time.time()
         Shell_NotifyIcon(NIM_MODIFY, (self.hwnd, 0, NIF_INFO,
                                       LOCAL_WM,
                                       hicon, "Balloon Tooltip", msg, 200,
                                       title))
 
         # PumpMessages handles the messages of the window in the main loop
-        # ! but will NOT stop until PostQuitMessage is called
+        # but will NOT STOP until PostQuitMessage is called
         PumpMessages()
 
         # take a rest then destroy
-        sleep(duration)
+        while time.time() - notif_start_time < duration:
+            sleep(0.1)
         DestroyWindow(self.hwnd)
         UnregisterClass(self.wc.lpszClassName, None)
         return None

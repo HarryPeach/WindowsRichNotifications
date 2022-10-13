@@ -45,6 +45,10 @@ class WindowsNotifier(object):
             self._on_destroy(hwnd, msg, wparam, lparam)
             return
 
+        # Fixes (https://github.com/HarryPeach/WindowsRichNotifications/issues/7)
+        if msg == 0x31f:
+            PostQuitMessage(0)
+
         if msg == LOCAL_WM:
             if lparam == NIN_BALLOONUSERCLICK:
                 if self.last_callback is not None:
@@ -80,7 +84,6 @@ class WindowsNotifier(object):
                                  CW_USEDEFAULT,
                                  0, 0, self.hinst, None)
         UpdateWindow(self.hwnd)
-
         self.last_callback = click_callback
 
         # icon

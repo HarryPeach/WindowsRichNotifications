@@ -46,6 +46,10 @@ def test_notification_delay(notifier: WindowsNotifier) -> None:
     """
     margin: float = 0.8
 
+    # Required due to a quirk with notification timings
+    # (https://github.com/HarryPeach/WindowsRichNotifications/issues/7)
+    notifier.notify("<Example Body>", duration=5)
+
     for i in range(1, 5):
         _validate_time_taken(i, margin, lambda: notifier.notify(
             "<Example Body>", duration=i))

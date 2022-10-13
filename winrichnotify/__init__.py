@@ -113,9 +113,10 @@ class WindowsNotifier(object):
         # but will NOT STOP until PostQuitMessage is called
         PumpMessages()
 
-        # take a rest then destroy
+        # Ensure that the duration of the notification is correct
         while time.time() - notif_start_time < duration:
             sleep(0.1)
+
         DestroyWindow(self.hwnd)
         UnregisterClass(self.wc.lpszClassName, None)
         return None

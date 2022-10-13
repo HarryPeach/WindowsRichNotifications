@@ -13,7 +13,7 @@ def notification_title_body(notifier: WindowsNotifier) -> None:
     logging.info("Showing notification with example title and body")
     notifier.notify(
         "<Example Body>",
-        "<Example Title>"
+        "<Example Title>",
     )
 
 
